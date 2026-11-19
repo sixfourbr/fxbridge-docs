@@ -13,6 +13,7 @@ contracts/
 # Ferramentas e automação
 scripts/
 redocly.yaml
+.redocly.lint-ignore.yaml
 package.json
 package-lock.json
 .nvmrc
