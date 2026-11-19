@@ -84,7 +84,7 @@ flowchart LR
 | DEC-021 | Idioma do spec | Único en / único pt-BR / um por idioma | Um por idioma, com check de paridade | 🟢 Aprovada |
 | DEC-022 | Slugs e nomes de arquivo | Em inglês nos dois idiomas / traduzidos | Em inglês nos dois idiomas, porque o Mintlify exige nomes de arquivo idênticos entre idiomas (✅) | Pendente (aprovado junto com o plano) |
 | DEC-023 | Breaking change no CI | Bloquear / avisar | Bloquear o PR se `redocly diff` achar breaking change na mesma `/vN`, salvo com o label `breaking-approved` | Pendente (aprovado junto com o plano) |
-| DEC-024 | Prazo de depreciação | 6 / 12 meses | 💡 12 meses entre `deprecated` e `sunset` | Pendente (decidir na E3) |
+| DEC-024 | Prazo de depreciação | 6 / 12 meses | 12 meses entre `deprecated` e `sunset` | 🟢 Aprovada |
 | DEC-025 | Rigor do check de tradução | Falhar / avisar | Falhar se faltar a página en correspondente; avisar se a en estiver mais antiga que a pt-BR | Pendente (aprovado junto com o plano) |
 
 ## 3. Arquitetura proposta

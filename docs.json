@@ -24,7 +24,22 @@
               {
                 "group": "Primeiros passos",
                 "pages": [
-                  "index"
+                  "index",
+                  "guides/quickstart"
+                ]
+              },
+              {
+                "group": "Conceitos",
+                "pages": [
+                  "guides/environments",
+                  "guides/errors",
+                  "guides/versioning"
+                ]
+              },
+              {
+                "group": "Novidades",
+                "pages": [
+                  "changelog"
                 ]
               }
             ]
@@ -47,7 +62,8 @@
                     "group": "Referência da API",
                     "openapi": {
                       "source": "openapi/pingpong/v1/pt-BR.json",
-                      "directory": "apis/pingpong/v1/reference"
+                      "directory": "apis/pingpong/v1/reference",
+                      "slug": "operationId"
                     }
                   }
                 ]
@@ -66,7 +82,22 @@
               {
                 "group": "Getting started",
                 "pages": [
-                  "en/index"
+                  "en/index",
+                  "en/guides/quickstart"
+                ]
+              },
+              {
+                "group": "Concepts",
+                "pages": [
+                  "en/guides/environments",
+                  "en/guides/errors",
+                  "en/guides/versioning"
+                ]
+              },
+              {
+                "group": "What's new",
+                "pages": [
+                  "en/changelog"
                 ]
               }
             ]
@@ -89,7 +120,8 @@
                     "group": "API reference",
                     "openapi": {
                       "source": "openapi/pingpong/v1/en.json",
-                      "directory": "en/apis/pingpong/v1/reference"
+                      "directory": "en/apis/pingpong/v1/reference",
+                      "slug": "operationId"
                     }
                   }
                 ]

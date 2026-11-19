@@ -1,0 +1,35 @@
+---
+title: "Versionamento"
+description: "Como as APIs da FXBridge são versionadas, evoluem e são descontinuadas."
+---
+
+## Versão no caminho
+
+A versão principal de cada API faz parte do caminho do endpoint, por exemplo `/v1/ping`. Use
+o seletor de versão do portal para consultar a documentação de cada versão.
+
+## O que muda dentro de uma versão
+
+Dentro da mesma versão, as APIs só recebem mudanças **compatíveis**, como:
+
+- novos endpoints;
+- novos campos opcionais na requisição;
+- novos campos na resposta.
+
+<Warning>
+  Sua integração deve ignorar campos desconhecidos nas respostas. Novos campos podem ser
+  adicionados sem mudança de versão.
+</Warning>
+
+Mudanças **incompatíveis** (remover ou renomear campos, alterar tipos, tornar um campo
+obrigatório) só acontecem em uma nova versão principal, como `/v2`.
+
+## Descontinuação
+
+1. Quando uma nova versão principal é publicada, a anterior pode ser marcada como
+   **Deprecated** no seletor de versão do portal, e a mudança é anunciada no
+   [changelog](/changelog).
+2. A versão descontinuada continua disponível por pelo menos **12 meses** após o anúncio.
+3. Ao fim desse prazo, a versão é desligada.
+
+Acompanhe o [changelog](/changelog) para planejar a migração com antecedência.

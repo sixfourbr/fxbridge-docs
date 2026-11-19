@@ -34,8 +34,11 @@ compartilhado com o time). Consulte o plano antes de mudar estrutura, navegaçã
   idiomas no mesmo PR — a estrutura deve ser idêntica; só textos mudam.
 - **Nova API ou versão:** registre as entradas pt-BR e en em `redocly.yaml` e, no `docs.json`,
   aponte a referência com `"openapi": {"source": "openapi/<api>/v<N>/<idioma>.json",
-  "directory": "[en/]apis/<api>/v<N>/reference"}` — o `directory` evita colisão de URLs
-  entre APIs, versões e idiomas.
+  "directory": "[en/]apis/<api>/v<N>/reference", "slug": "operationId"}` — o `directory`
+  evita colisão de URLs entre APIs, versões e idiomas; o `slug` por `operationId` mantém a
+  mesma URL nos dois idiomas (o seletor de idioma depende disso) e estável se o `summary` mudar.
+- **Guias** cobrem apenas políticas definidas. Não documente autenticação, rate limit,
+  paginação ou idempotência antes de a política existir de fato.
 - **Breaking change** em uma versão publicada (`/vN`) é proibida: crie `/v(N+1)`.
 - **Erros** seguem RFC 9457 (`application/problem+json`) via `$ref` para `contracts/_shared`.
 - **Segurança:** o portal é público e o Mintlify serve publicamente **todo** JSON/YAML do

@@ -1,0 +1,20 @@
+---
+title: "Ambientes"
+description: "Sandbox e Produção: URLs base e quando usar cada ambiente."
+---
+
+As APIs da FXBridge estão disponíveis em dois ambientes. O caminho de cada endpoint é o mesmo
+nos dois; muda apenas a URL base.
+
+| Ambiente | URL base | Uso |
+|---|---|---|
+| Sandbox | `https://sandbox.fxbridge.com.br` | Desenvolvimento e testes da sua integração |
+| Produção | `https://api.fxbridge.com.br` | Operação real |
+
+<Tip>
+  Deixe a URL base configurável na sua aplicação (por exemplo, por variável de ambiente) para
+  trocar de ambiente sem alterar código.
+</Tip>
+
+Na referência de cada API, o seletor de servidor permite escolher o ambiente antes de usar o
+botão **Experimentar**.

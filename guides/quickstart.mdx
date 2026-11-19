@@ -1,0 +1,55 @@
+---
+title: "Primeiros passos"
+description: "Faça sua primeira chamada às APIs da FXBridge usando a API Ping-Pong."
+---
+
+Neste guia você confirma que sua integração alcança os ambientes da FXBridge chamando o
+endpoint `GET /v1/ping`, que não exige autenticação.
+
+<Steps>
+  <Step title="Escolha o ambiente">
+    Comece pelo **Sandbox** (`https://sandbox.fxbridge.com.br`). Veja os detalhes em
+    [Ambientes](/guides/environments).
+  </Step>
+  <Step title="Faça a requisição">
+    <CodeGroup>
+
+    ```bash cURL
+    curl --request GET \
+      --url https://sandbox.fxbridge.com.br/v1/ping
+    ```
+
+    ```javascript JavaScript
+    const response = await fetch('https://sandbox.fxbridge.com.br/v1/ping');
+    const body = await response.json();
+    console.log(body.message, body.timestamp);
+    ```
+
+    ```python Python
+    import requests
+
+    response = requests.get("https://sandbox.fxbridge.com.br/v1/ping", timeout=10)
+    response.raise_for_status()
+    print(response.json())
+    ```
+
+    </CodeGroup>
+  </Step>
+  <Step title="Confira a resposta">
+    Uma resposta `200 OK` indica que o serviço está disponível:
+
+    ```json
+    {
+      "message": "pong",
+      "timestamp": "2026-11-19T08:57:35Z"
+    }
+    ```
+
+    O campo `timestamp` traz o horário do servidor em UTC (ISO 8601).
+  </Step>
+</Steps>
+
+## Próximos passos
+
+- Entenda o [formato de erros](/guides/errors) para tratar falhas de forma consistente.
+- Teste o endpoint diretamente na [referência da API](/apis/pingpong/v1/reference/ping/get-ping).
