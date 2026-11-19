@@ -37,6 +37,11 @@ compartilhado com o time). Consulte o plano antes de mudar estrutura, navegaçã
   "directory": "[en/]apis/<api>/v<N>/reference", "slug": "operationId"}` — o `directory`
   evita colisão de URLs entre APIs, versões e idiomas; o `slug` por `operationId` mantém a
   mesma URL nos dois idiomas (o seletor de idioma depende disso) e estável se o `summary` mudar.
+- **Ícones** usam nomes do Font Awesome (biblioteca padrão do Mintlify), por exemplo
+  `layer-group`, `triangle-exclamation`, `code-branch`. Nomes de outras bibliotecas (Lucide)
+  não renderizam e geram erro 403 no console.
+- **Identidade visual:** logos em `logo/light.svg` (fundo claro) e `logo/dark.svg` (fundo
+  escuro), favicon em `favicon.svg`. Cores em `docs.json` validadas com `npm run a11y`.
 - **Guias** cobrem apenas políticas definidas. Não documente autenticação, rate limit,
   paginação ou idempotência antes de a política existir de fato.
 - **Breaking change** em uma versão publicada (`/vN`) é proibida: crie `/v(N+1)`.
