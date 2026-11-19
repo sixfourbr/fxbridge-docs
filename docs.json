@@ -1,0 +1,81 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "FXBridge Docs",
+  "colors": {
+    "primary": "#0F766E",
+    "light": "#2DD4BF",
+    "dark": "#0F766E"
+  },
+  "appearance": {
+    "default": "system",
+    "strict": false
+  },
+  "navigation": {
+    "languages": [
+      {
+        "language": "pt-BR",
+        "default": true,
+        "dropdowns": [
+          {
+            "dropdown": "Guias",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "Primeiros passos",
+                "pages": ["index"]
+              }
+            ]
+          },
+          {
+            "dropdown": "Ping-Pong",
+            "icon": "server",
+            "versions": [
+              {
+                "version": "v1",
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Ping-Pong v1",
+                    "pages": ["apis/pingpong/v1/overview"]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "en",
+        "dropdowns": [
+          {
+            "dropdown": "Guides",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "Getting started",
+                "pages": ["en/index"]
+              }
+            ]
+          },
+          {
+            "dropdown": "Ping-Pong",
+            "icon": "server",
+            "versions": [
+              {
+                "version": "v1",
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Ping-Pong v1",
+                    "pages": ["en/apis/pingpong/v1/overview"]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

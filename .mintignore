@@ -1,0 +1,19 @@
+# Arquivos internos que NÃO devem ser publicados no portal (sintaxe .gitignore).
+# Sem autenticação, o Mintlify serve publicamente todo JSON/YAML do repositório.
+
+# Planejamento e instruções para agentes
+.specs/
+AGENTS.md
+CLAUDE.md
+CLAUDE.local.md
+
+# Fonte dos contratos (o portal publica apenas o bundle em openapi/)
+contracts/
+
+# Ferramentas e automação
+scripts/
+redocly.yaml
+package.json
+package-lock.json
+.nvmrc
+.playwright-mcp/
