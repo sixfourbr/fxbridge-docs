@@ -10,6 +10,8 @@ apis:
 
 extends:
   - recommended
+  # Regras do `redocly diff`: sem elas, remoções de campos não são classificadas como major.
+  - diff-recommended
 
 rules:
   # Operações

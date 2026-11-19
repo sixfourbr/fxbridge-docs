@@ -1,0 +1,120 @@
+name: Docs CI
+
+on:
+  pull_request:
+    branches: [main]
+    # labeled/unlabeled: reavalia o check de breaking change ao aplicar "breaking-approved".
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Portal e contratos
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # histórico completo: check de tradução compara commits
+          persist-credentials: false
+
+      - name: Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Dependências
+        run: npm ci
+
+      - name: Lint OpenAPI
+        run: npm run lint:openapi
+
+      - name: Bundle atualizado
+        run: npm run check:bundle
+
+      - name: Paridade de contratos pt-BR/en
+        run: npm run check:parity
+
+      - name: Espelhamento de idiomas
+        run: npm run check:translations
+
+      - name: Somente conteúdo público
+        run: npm run check:public
+
+      - name: Mintlify validate
+        run: npm run validate
+
+      - name: Links quebrados
+        run: npm run links
+
+      - name: Acessibilidade
+        run: npm run a11y
+
+  breaking-changes:
+    name: Breaking changes
+    if: >-
+      github.event_name == 'pull_request' &&
+      !contains(github.event.pull_request.labels.*.name, 'breaking-approved')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # precisa da branch base para comparar
+          persist-credentials: false
+
+      - name: Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Dependências
+        run: npm ci
+
+      - name: Comparar contratos com a branch base
+        run: npm run check:breaking
+        env:
+          BASE_REF: origin/${{ github.base_ref }}
+
+  secrets:
+    name: Varredura de segredos
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # varre todo o histórico
+          persist-credentials: false
+
+      # Binário open source via imagem oficial (a gitleaks-action exige licença em organizações).
+      # O gitleaks sai com código 0 mesmo quando não consegue ler o histórico; por isso o
+      # passo falha explicitamente se houver erro ou se nenhum commit for varrido.
+      - name: Gitleaks
+        run: |
+          set -o pipefail
+          # safe.directory via env (escopo de linha de comando) evita o erro de
+          # "dubious ownership" quando o dono dos arquivos difere do usuário do container.
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -e GIT_CONFIG_COUNT=1 \
+            -e GIT_CONFIG_KEY_0=safe.directory \
+            -e GIT_CONFIG_VALUE_0=/repo \
+            -v "$GITHUB_WORKSPACE:/repo:ro" \
+            ghcr.io/gitleaks/gitleaks:v8.30.1 \
+            git /repo --redact --no-banner --no-color 2>&1 | tee "$RUNNER_TEMP/gitleaks.log"
+          if grep -qE ' ERR | 0 commits scanned' "$RUNNER_TEMP/gitleaks.log"; then
+            echo "::error::Gitleaks não conseguiu varrer o histórico do repositório."
+            exit 1
+          fi

@@ -59,6 +59,19 @@ npm run check         # lint OpenAPI + bundle atualizado + paridade pt-BR/en
 npm run a11y          # contraste e texto alternativo
 ```
 
+## CI (`.github/workflows/docs-ci.yml`)
+
+Todo PR para `main` roda três jobs, que devem ser checks obrigatórios na branch protection:
+
+| Job | O que verifica |
+|---|---|
+| Portal e contratos | lint OpenAPI, bundle atualizado, paridade pt-BR/en, espelhamento de páginas (aviso se a en estiver desatualizada), conteúdo só público, `mint validate`, links quebrados, acessibilidade |
+| Breaking changes | `redocly diff` (regras `diff-recommended`) contra a branch base; mudança `major` em contrato existente reprova. O label `breaking-approved` pula o job — use só com aprovação explícita |
+| Varredura de segredos | gitleaks em todo o histórico; falha também se não conseguir ler o histórico |
+
+Limitação conhecida: `mint validate` **não** detecta navegação inválida no `docs.json`
+(aceita tipos de filho misturados). Revise mudanças de navegação com `npm run dev`.
+
 ## Commits
 
 Conventional Commits em português do Brasil: `tipo(escopo): resumo` no imperativo, até ~72
