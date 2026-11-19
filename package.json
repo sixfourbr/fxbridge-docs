@@ -7,10 +7,14 @@
   },
   "scripts": {
     "dev": "mint dev",
+    "lint:openapi": "redocly lint",
+    "bundle": "redocly bundle",
+    "check:bundle": "redocly bundle && git diff --exit-code -- openapi/",
+    "check:parity": "node scripts/check-spec-parity.mjs",
     "validate": "mint validate",
     "links": "mint broken-links --check-anchors",
     "a11y": "mint a11y",
-    "check": "npm run validate && npm run links"
+    "check": "npm run lint:openapi && npm run check:bundle && npm run check:parity && npm run validate && npm run links"
   },
   "devDependencies": {
     "@redocly/cli": "2.80.0",

@@ -1,0 +1,162 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Ping-Pong API",
+    "version": "1.0.0",
+    "description": "API de demonstração para verificar a conectividade da sua integração com os ambientes da FXBridge."
+  },
+  "servers": [
+    {
+      "url": "https://sandbox.fxbridge.com.br",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.fxbridge.com.br",
+      "description": "Produção"
+    }
+  ],
+  "security": [],
+  "tags": [
+    {
+      "name": "Ping",
+      "description": "Verificação de conectividade."
+    }
+  ],
+  "paths": {
+    "/v1/ping": {
+      "get": {
+        "operationId": "getPing",
+        "summary": "Verificar conectividade",
+        "description": "Retorna `pong` e o horário atual do servidor em UTC. Não exige autenticação.",
+        "tags": [
+          "Ping"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Serviço disponível.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pong"
+                },
+                "example": {
+                  "message": "pong",
+                  "timestamp": "2026-11-19T08:57:35Z"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pong": {
+        "type": "object",
+        "description": "Resposta de verificação de conectividade.",
+        "required": [
+          "message",
+          "timestamp"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Sempre `pong`.",
+            "enum": [
+              "pong"
+            ],
+            "example": "pong"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Horário do servidor no momento da resposta, em UTC (ISO 8601).",
+            "example": "2026-11-19T08:57:35Z"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "description": "Detalhes do problema no formato RFC 9457 (Problem Details for HTTP APIs). Membros adicionais (extensões) podem ser incluídos conforme a API.",
+        "required": [
+          "title",
+          "status"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri-reference",
+            "description": "URI que identifica o tipo do problema. Quando ausente, assume-se `about:blank`.",
+            "default": "about:blank",
+            "example": "about:blank"
+          },
+          "title": {
+            "type": "string",
+            "description": "Resumo curto e legível do tipo do problema.",
+            "example": "Internal Server Error"
+          },
+          "status": {
+            "type": "integer",
+            "description": "Código de status HTTP gerado pelo servidor para esta ocorrência.",
+            "minimum": 100,
+            "maximum": 599,
+            "example": 500
+          },
+          "detail": {
+            "type": "string",
+            "description": "Explicação legível específica desta ocorrência do problema.",
+            "example": "Ocorreu um erro inesperado ao processar a requisição."
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri-reference",
+            "description": "URI que identifica esta ocorrência específica do problema.",
+            "example": "/v1/ping"
+          }
+        }
+      }
+    },
+    "responses": {
+      "InternalServerError": {
+        "description": "Erro interno inesperado no servidor.",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetails"
+            },
+            "example": {
+              "type": "about:blank",
+              "title": "Internal Server Error",
+              "status": 500,
+              "detail": "Ocorreu um erro inesperado ao processar a requisição."
+            }
+          }
+        }
+      },
+      "ServiceUnavailable": {
+        "description": "Serviço temporariamente indisponível. Tente novamente mais tarde.",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetails"
+            },
+            "example": {
+              "type": "about:blank",
+              "title": "Service Unavailable",
+              "status": 503,
+              "detail": "O serviço está temporariamente indisponível."
+            }
+          }
+        }
+      }
+    }
+  }
+}

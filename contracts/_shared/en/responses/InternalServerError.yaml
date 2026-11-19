@@ -1,0 +1,10 @@
+description: Unexpected internal server error.
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/ProblemDetails.yaml
+    example:
+      type: about:blank
+      title: Internal Server Error
+      status: 500
+      detail: An unexpected error occurred while processing the request.

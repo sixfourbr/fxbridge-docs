@@ -1,0 +1,10 @@
+description: Erro interno inesperado no servidor.
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/ProblemDetails.yaml
+    example:
+      type: about:blank
+      title: Internal Server Error
+      status: 500
+      detail: Ocorreu um erro inesperado ao processar a requisição.

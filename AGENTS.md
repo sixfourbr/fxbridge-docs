@@ -19,7 +19,9 @@ compartilhado com o time). Consulte o plano antes de mudar estrutura, navegaçã
 | `docs.json` | Configuração do Mintlify (tema, navegação, idiomas, versões) |
 | `contracts/<api>/v<N>/<idioma>/` | **Fonte** dos contratos OpenAPI 3.1 (design-first) |
 | `contracts/_shared/` | Componentes comuns (Problem Details RFC 9457, headers) |
-| `openapi/<api>/v<N>/<idioma>.yaml` | Bundle gerado (`npm run bundle`) — não editar à mão |
+| `openapi/<api>/v<N>/<idioma>.json` | Bundle gerado (`npm run bundle`) — não editar à mão |
+| `redocly.yaml` | Padrão OpenAPI (regras de lint) e registro de cada API/versão/idioma |
+| `.redocly.lint-ignore.yaml` | Exceções de lint **explícitas e revisadas** (ex.: endpoint sem 4xx) |
 | `*.mdx` na raiz, `guides/`, `apis/` | Conteúdo em **pt-BR** (idioma-fonte) |
 | `en/` | Espelho em inglês com **nomes de arquivo idênticos** |
 | `snippets/` | Trechos MDX reutilizáveis |
@@ -30,6 +32,10 @@ compartilhado com o time). Consulte o plano antes de mudar estrutura, navegaçã
   com o mesmo caminho e nome de arquivo. Nomes de arquivo e slugs são em inglês.
 - **Contratos são design-first.** Edite em `contracts/`, nunca em `openapi/`. Altere os dois
   idiomas no mesmo PR — a estrutura deve ser idêntica; só textos mudam.
+- **Nova API ou versão:** registre as entradas pt-BR e en em `redocly.yaml` e, no `docs.json`,
+  aponte a referência com `"openapi": {"source": "openapi/<api>/v<N>/<idioma>.json",
+  "directory": "[en/]apis/<api>/v<N>/reference"}` — o `directory` evita colisão de URLs
+  entre APIs, versões e idiomas.
 - **Breaking change** em uma versão publicada (`/vN`) é proibida: crie `/v(N+1)`.
 - **Erros** seguem RFC 9457 (`application/problem+json`) via `$ref` para `contracts/_shared`.
 - **Segurança:** o portal é público e o Mintlify serve publicamente **todo** JSON/YAML do
@@ -43,9 +49,11 @@ Requer Node.js `>=20.19 <21` ou `>=22.12 <25` (ver `.nvmrc`).
 
 ```bash
 npm install
-npm run dev        # preview local (http://localhost:3000)
-npm run check      # validações do portal (mint validate + broken-links)
-npm run a11y       # contraste e texto alternativo
+npm run dev           # preview local (http://localhost:3000)
+npm run bundle        # gera openapi/ a partir de contracts/ (rode após editar contratos)
+npm run check         # lint OpenAPI + bundle atualizado + paridade pt-BR/en
+                      # + mint validate + broken-links
+npm run a11y          # contraste e texto alternativo
 ```
 
 ## Commits

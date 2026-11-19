@@ -1,0 +1,65 @@
+openapi: 3.1.0
+info:
+  title: Ping-Pong API
+  version: 1.0.0
+  description: >-
+    Demo API to check your integration's connectivity with FXBridge
+    environments.
+servers:
+  - url: https://sandbox.fxbridge.com.br
+    description: Sandbox
+  - url: https://api.fxbridge.com.br
+    description: Production
+security: []
+tags:
+  - name: Ping
+    description: Connectivity check.
+paths:
+  /v1/ping:
+    get:
+      operationId: getPing
+      summary: Check connectivity
+      description: >-
+        Returns `pong` and the current server time in UTC. No authentication required.
+      tags:
+        - Ping
+      security: []
+      responses:
+        '200':
+          description: Service available.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pong'
+              example:
+                message: pong
+                timestamp: '2026-11-19T08:57:35Z'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+components:
+  schemas:
+    Pong:
+      type: object
+      description: Connectivity check response.
+      required:
+        - message
+        - timestamp
+      properties:
+        message:
+          type: string
+          description: Always `pong`.
+          enum:
+            - pong
+          example: pong
+        timestamp:
+          type: string
+          format: date-time
+          description: Server time at the moment of the response, in UTC (ISO 8601).
+          example: '2026-11-19T08:57:35Z'
+  responses:
+    InternalServerError:
+      $ref: ../../../_shared/en/responses/InternalServerError.yaml
+    ServiceUnavailable:
+      $ref: ../../../_shared/en/responses/ServiceUnavailable.yaml

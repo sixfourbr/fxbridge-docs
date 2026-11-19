@@ -23,7 +23,9 @@
             "groups": [
               {
                 "group": "Primeiros passos",
-                "pages": ["index"]
+                "pages": [
+                  "index"
+                ]
               }
             ]
           },
@@ -37,7 +39,16 @@
                 "groups": [
                   {
                     "group": "Ping-Pong v1",
-                    "pages": ["apis/pingpong/v1/overview"]
+                    "pages": [
+                      "apis/pingpong/v1/overview"
+                    ]
+                  },
+                  {
+                    "group": "Referência da API",
+                    "openapi": {
+                      "source": "openapi/pingpong/v1/pt-BR.json",
+                      "directory": "apis/pingpong/v1/reference"
+                    }
                   }
                 ]
               }
@@ -54,7 +65,9 @@
             "groups": [
               {
                 "group": "Getting started",
-                "pages": ["en/index"]
+                "pages": [
+                  "en/index"
+                ]
               }
             ]
           },
@@ -68,7 +81,16 @@
                 "groups": [
                   {
                     "group": "Ping-Pong v1",
-                    "pages": ["en/apis/pingpong/v1/overview"]
+                    "pages": [
+                      "en/apis/pingpong/v1/overview"
+                    ]
+                  },
+                  {
+                    "group": "API reference",
+                    "openapi": {
+                      "source": "openapi/pingpong/v1/en.json",
+                      "directory": "en/apis/pingpong/v1/reference"
+                    }
                   }
                 ]
               }

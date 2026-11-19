@@ -1,0 +1,10 @@
+description: Serviço temporariamente indisponível. Tente novamente mais tarde.
+content:
+  application/problem+json:
+    schema:
+      $ref: ../schemas/ProblemDetails.yaml
+    example:
+      type: about:blank
+      title: Service Unavailable
+      status: 503
+      detail: O serviço está temporariamente indisponível.
