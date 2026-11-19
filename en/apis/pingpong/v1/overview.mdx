@@ -1,0 +1,22 @@
+---
+title: "Overview"
+description: "Ping-Pong API v1: connectivity check against FXBridge environments."
+---
+
+The Ping-Pong API answers `GET /v1/ping` with the message `pong` and the server time in UTC.
+Use it to confirm that your integration reaches FXBridge environments.
+
+| Feature | Value |
+|---|---|
+| Authentication | Not required |
+| Format | JSON (`application/json`); errors in `application/problem+json` |
+| Sandbox | `https://sandbox.fxbridge.com.br` |
+| Production | `https://api.fxbridge.com.br` |
+
+## Endpoints
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | [`/v1/ping`](/en/apis/pingpong/v1/reference/ping/get-ping) | Check connectivity |
+
+To make your first call, follow the [getting started](/en/guides/quickstart) guide.

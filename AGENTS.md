@@ -1,0 +1,84 @@
+# AGENTS.md — Portal de documentação de APIs FXBridge
+
+Instruções para pessoas e agentes de IA (Claude Code, Copilot, Codex, Cursor, Gemini CLI)
+que contribuem neste repositório. Este arquivo é a **fonte única**; o `CLAUDE.md` apenas o importa.
+
+## Visão geral
+
+Portal público de documentação de APIs publicado pelo **Mintlify** (plano Free) em
+`docs.fxbridge.com.br`. O repositório Git é a fonte única: todo merge na `main` é publicado
+automaticamente pelo GitHub App do Mintlify.
+
+Decisões, arquitetura e plano de implementação estão em [`.specs/`](.specs/) (versionado e
+compartilhado com o time). Consulte o plano antes de mudar estrutura, navegação ou padrões.
+
+## Estrutura
+
+| Caminho | Conteúdo |
+|---|---|
+| `docs.json` | Configuração do Mintlify (tema, navegação, idiomas, versões) |
+| `contracts/<api>/v<N>/<idioma>/` | **Fonte** dos contratos OpenAPI 3.1 (design-first) |
+| `contracts/_shared/` | Componentes comuns (Problem Details RFC 9457, headers) |
+| `openapi/<api>/v<N>/<idioma>.json` | Bundle gerado (`npm run bundle`) — não editar à mão |
+| `redocly.yaml` | Padrão OpenAPI (regras de lint) e registro de cada API/versão/idioma |
+| `.redocly.lint-ignore.yaml` | Exceções de lint **explícitas e revisadas** (ex.: endpoint sem 4xx) |
+| `*.mdx` na raiz, `guides/`, `apis/` | Conteúdo em **pt-BR** (idioma-fonte) |
+| `en/` | Espelho em inglês com **nomes de arquivo idênticos** |
+| `snippets/` | Trechos MDX reutilizáveis |
+
+## Regras
+
+- **Idioma-fonte é pt-BR.** Toda página nova em pt-BR exige a página correspondente em `en/`
+  com o mesmo caminho e nome de arquivo. Nomes de arquivo e slugs são em inglês.
+- **Contratos são design-first.** Edite em `contracts/`, nunca em `openapi/`. Altere os dois
+  idiomas no mesmo PR — a estrutura deve ser idêntica; só textos mudam.
+- **Nova API ou versão:** registre as entradas pt-BR e en em `redocly.yaml` e, no `docs.json`,
+  aponte a referência com `"openapi": {"source": "openapi/<api>/v<N>/<idioma>.json",
+  "directory": "[en/]apis/<api>/v<N>/reference", "slug": "operationId"}` — o `directory`
+  evita colisão de URLs entre APIs, versões e idiomas; o `slug` por `operationId` mantém a
+  mesma URL nos dois idiomas (o seletor de idioma depende disso) e estável se o `summary` mudar.
+- **Ícones** usam nomes do Font Awesome (biblioteca padrão do Mintlify), por exemplo
+  `layer-group`, `triangle-exclamation`, `code-branch`. Nomes de outras bibliotecas (Lucide)
+  não renderizam e geram erro 403 no console.
+- **Identidade visual:** logos em `logo/light.svg` (fundo claro) e `logo/dark.svg` (fundo
+  escuro), favicon em `favicon.svg`. Cores em `docs.json` validadas com `npm run a11y`.
+- **Guias** cobrem apenas políticas definidas. Não documente autenticação, rate limit,
+  paginação ou idempotência antes de a política existir de fato.
+- **Breaking change** em uma versão publicada (`/vN`) é proibida: crie `/v(N+1)`.
+- **Erros** seguem RFC 9457 (`application/problem+json`) via `$ref` para `contracts/_shared`.
+- **Segurança:** o portal é público e o Mintlify serve publicamente **todo** JSON/YAML do
+  repositório. Nunca adicione contratos internos/restritos, segredos, tokens ou dados reais.
+  Exemplos usam apenas valores fictícios.
+- Toda mudança entra por **Pull Request** com checks verdes; não edite pelo editor web do Mintlify.
+
+## Comandos
+
+Requer Node.js `>=20.19 <21` ou `>=22.12 <25` (ver `.nvmrc`).
+
+```bash
+npm install
+npm run dev           # preview local (http://localhost:3000)
+npm run bundle        # gera openapi/ a partir de contracts/ (rode após editar contratos)
+npm run check         # lint OpenAPI + bundle atualizado + paridade pt-BR/en
+                      # + mint validate + broken-links
+npm run a11y          # contraste e texto alternativo
+```
+
+## CI (`.github/workflows/docs-ci.yml`)
+
+Todo PR para `main` roda três jobs, que devem ser checks obrigatórios na branch protection:
+
+| Job | O que verifica |
+|---|---|
+| Portal e contratos | lint OpenAPI, bundle atualizado, paridade pt-BR/en, espelhamento de páginas (aviso se a en estiver desatualizada), conteúdo só público, `mint validate`, links quebrados, acessibilidade |
+| Breaking changes | `redocly diff` (regras `diff-recommended`) contra a branch base; mudança `major` em contrato existente reprova. O label `breaking-approved` pula o job — use só com aprovação explícita |
+| Varredura de segredos | gitleaks em todo o histórico; falha também se não conseguir ler o histórico |
+
+Limitação conhecida: `mint validate` **não** detecta navegação inválida no `docs.json`
+(aceita tipos de filho misturados). Revise mudanças de navegação com `npm run dev`.
+
+## Commits
+
+Conventional Commits em português do Brasil: `tipo(escopo): resumo` no imperativo, até ~72
+caracteres. Tipos: `feat`, `fix`, `docs`, `refactor`, `chore`, `test`, `ci`, `build`, `style`,
+`perf`. Escopos sugeridos: nome da API (`pingpong`), `portal`, `ci`, `contracts`.

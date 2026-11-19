@@ -1,0 +1,34 @@
+---
+title: "Versioning"
+description: "How FXBridge APIs are versioned, evolve and are deprecated."
+---
+
+## Version in the path
+
+The major version of each API is part of the endpoint path, for example `/v1/ping`. Use the
+portal's version selector to read the documentation for each version.
+
+## What changes within a version
+
+Within the same version, APIs only receive **backward-compatible** changes, such as:
+
+- new endpoints;
+- new optional request fields;
+- new response fields.
+
+<Warning>
+  Your integration must ignore unknown fields in responses. New fields may be added without a
+  version change.
+</Warning>
+
+**Breaking** changes (removing or renaming fields, changing types, making a field required)
+only happen in a new major version, such as `/v2`.
+
+## Deprecation
+
+1. When a new major version is released, the previous one may be marked as **Deprecated** in
+   the portal's version selector, and the change is announced in the [changelog](/en/changelog).
+2. The deprecated version remains available for at least **12 months** after the announcement.
+3. At the end of that period, the version is shut down.
+
+Follow the [changelog](/en/changelog) to plan your migration ahead of time.

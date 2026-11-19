@@ -1,0 +1,141 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "FXBridge Docs",
+  "colors": {
+    "primary": "#0649BE",
+    "light": "#139CFF",
+    "dark": "#0989C7"
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg",
+    "href": "/"
+  },
+  "favicon": "/favicon.svg",
+  "appearance": {
+    "default": "system",
+    "strict": false
+  },
+  "navigation": {
+    "languages": [
+      {
+        "language": "pt-BR",
+        "default": true,
+        "dropdowns": [
+          {
+            "dropdown": "Guias",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "Primeiros passos",
+                "pages": [
+                  "index",
+                  "guides/quickstart"
+                ]
+              },
+              {
+                "group": "Conceitos",
+                "pages": [
+                  "guides/environments",
+                  "guides/errors",
+                  "guides/versioning"
+                ]
+              },
+              {
+                "group": "Novidades",
+                "pages": [
+                  "changelog"
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "Ping-Pong",
+            "icon": "server",
+            "versions": [
+              {
+                "version": "v1",
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Ping-Pong v1",
+                    "pages": [
+                      "apis/pingpong/v1/overview"
+                    ]
+                  },
+                  {
+                    "group": "Referência da API",
+                    "openapi": {
+                      "source": "openapi/pingpong/v1/pt-BR.json",
+                      "directory": "apis/pingpong/v1/reference",
+                      "slug": "operationId"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "en",
+        "dropdowns": [
+          {
+            "dropdown": "Guides",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "Getting started",
+                "pages": [
+                  "en/index",
+                  "en/guides/quickstart"
+                ]
+              },
+              {
+                "group": "Concepts",
+                "pages": [
+                  "en/guides/environments",
+                  "en/guides/errors",
+                  "en/guides/versioning"
+                ]
+              },
+              {
+                "group": "What's new",
+                "pages": [
+                  "en/changelog"
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "Ping-Pong",
+            "icon": "server",
+            "versions": [
+              {
+                "version": "v1",
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Ping-Pong v1",
+                    "pages": [
+                      "en/apis/pingpong/v1/overview"
+                    ]
+                  },
+                  {
+                    "group": "API reference",
+                    "openapi": {
+                      "source": "openapi/pingpong/v1/en.json",
+                      "directory": "en/apis/pingpong/v1/reference",
+                      "slug": "operationId"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

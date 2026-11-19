@@ -1,0 +1,18 @@
+# Dependências
+node_modules/
+
+# Sistema operacional / editores
+.DS_Store
+.idea/
+
+# Segredos e ambiente (nunca versionar)
+.env
+.env.*
+*.pem
+*.key
+
+# Preferências pessoais de agentes
+CLAUDE.local.md
+
+# Artefatos locais de testes de navegador
+.playwright-mcp/

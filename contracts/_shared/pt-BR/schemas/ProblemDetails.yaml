@@ -1,0 +1,33 @@
+type: object
+description: >-
+  Detalhes do problema no formato RFC 9457 (Problem Details for HTTP APIs).
+  Membros adicionais (extensões) podem ser incluídos conforme a API.
+required:
+  - title
+  - status
+properties:
+  type:
+    type: string
+    format: uri-reference
+    description: URI que identifica o tipo do problema. Quando ausente, assume-se `about:blank`.
+    default: about:blank
+    example: about:blank
+  title:
+    type: string
+    description: Resumo curto e legível do tipo do problema.
+    example: Internal Server Error
+  status:
+    type: integer
+    description: Código de status HTTP gerado pelo servidor para esta ocorrência.
+    minimum: 100
+    maximum: 599
+    example: 500
+  detail:
+    type: string
+    description: Explicação legível específica desta ocorrência do problema.
+    example: Ocorreu um erro inesperado ao processar a requisição.
+  instance:
+    type: string
+    format: uri-reference
+    description: URI que identifica esta ocorrência específica do problema.
+    example: /v1/ping

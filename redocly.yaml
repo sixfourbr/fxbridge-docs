@@ -1,0 +1,53 @@
+# Padrão OpenAPI da FXBridge. Fonte em contracts/, bundle gerado em openapi/.
+# Para adicionar uma API/versão: registre as duas entradas (pt-BR e en) abaixo.
+apis:
+  pingpong-v1-pt-BR@v1:
+    root: contracts/pingpong/v1/pt-BR/openapi.yaml
+    output: openapi/pingpong/v1/pt-BR.json
+  pingpong-v1-en@v1:
+    root: contracts/pingpong/v1/en/openapi.yaml
+    output: openapi/pingpong/v1/en.json
+
+extends:
+  - recommended
+  # Regras do `redocly diff`: sem elas, remoções de campos não são classificadas como major.
+  - diff-recommended
+
+rules:
+  # Operações
+  operation-operationId: error
+  operation-operationId-url-safe: error
+  operation-summary: error
+  operation-description: error
+  operation-2xx-response: error
+  # Exigido para APIs com entrada do cliente; exceções ficam registradas
+  # explicitamente em .redocly.lint-ignore.yaml.
+  operation-4xx-response: error
+  operation-4xx-problem-details-rfc7807: error
+
+  # Tags
+  operation-tag-defined: error
+  operation-singular-tag: error
+  tag-description: error
+
+  # Servidores
+  no-empty-servers: error
+  no-server-example.com: error
+  no-server-trailing-slash: error
+
+  # Caminhos
+  paths-kebab-case: error
+  no-path-trailing-slash: error
+
+  # Exemplos e esquemas
+  no-invalid-media-type-examples: error
+  no-invalid-schema-examples: error
+  scalar-property-missing-example: error
+  no-unused-components: error
+
+  # Segurança: toda operação declara security (vazio = pública, explícito)
+  security-defined: error
+
+  # Pendentes de decisão (contato e licença dos contratos)
+  info-contact: off
+  info-license: off

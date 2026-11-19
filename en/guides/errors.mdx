@@ -1,0 +1,46 @@
+---
+title: "Errors"
+description: "Standard error format for FXBridge APIs, based on RFC 9457."
+---
+
+All FXBridge APIs return errors in the **Problem Details** format, defined by
+[RFC 9457](https://www.rfc-editor.org/rfc/rfc9457), with the `application/problem+json`
+content type.
+
+## Structure
+
+```json
+{
+  "type": "about:blank",
+  "title": "Service Unavailable",
+  "status": 503,
+  "detail": "The service is temporarily unavailable.",
+  "instance": "/v1/ping"
+}
+```
+
+| Field | Required | Description |
+|---|---|---|
+| `type` | No | URI that identifies the problem type. When absent, `about:blank` applies. |
+| `title` | Yes | Short summary of the problem type. |
+| `status` | Yes | HTTP status code of this occurrence. |
+| `detail` | No | Explanation specific to this occurrence. |
+| `instance` | No | URI that identifies this occurrence. |
+
+An API may include additional fields (extensions) when it needs to give more context. Ignore
+fields your integration doesn't know.
+
+## Status codes
+
+| Range | Meaning | What to do |
+|---|---|---|
+| `2xx` | Success | Process the response. |
+| `4xx` | Problem with the request | Fix the request before trying again. |
+| `5xx` | Server failure | Try again later. |
+
+The possible codes for each endpoint are documented in the reference of the respective API.
+
+<Note>
+  When retrying requests after `5xx` errors, increase the interval between attempts
+  (exponential backoff) and limit the number of attempts.
+</Note>

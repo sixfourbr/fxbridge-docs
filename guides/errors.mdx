@@ -1,0 +1,46 @@
+---
+title: "Erros"
+description: "Formato padrão de erros das APIs da FXBridge, baseado na RFC 9457."
+---
+
+Todas as APIs da FXBridge retornam erros no formato **Problem Details**, definido pela
+[RFC 9457](https://www.rfc-editor.org/rfc/rfc9457), com o tipo de conteúdo
+`application/problem+json`.
+
+## Estrutura
+
+```json
+{
+  "type": "about:blank",
+  "title": "Service Unavailable",
+  "status": 503,
+  "detail": "O serviço está temporariamente indisponível.",
+  "instance": "/v1/ping"
+}
+```
+
+| Campo | Obrigatório | Descrição |
+|---|---|---|
+| `type` | Não | URI que identifica o tipo do problema. Quando ausente, vale `about:blank`. |
+| `title` | Sim | Resumo curto do tipo do problema. |
+| `status` | Sim | Código de status HTTP desta ocorrência. |
+| `detail` | Não | Explicação específica desta ocorrência. |
+| `instance` | Não | URI que identifica esta ocorrência. |
+
+Uma API pode incluir campos adicionais (extensões) quando precisar dar mais contexto. Ignore
+campos que sua integração não conhece.
+
+## Códigos de status
+
+| Faixa | Significado | O que fazer |
+|---|---|---|
+| `2xx` | Sucesso | Processar a resposta. |
+| `4xx` | Problema na requisição | Corrigir a requisição antes de tentar de novo. |
+| `5xx` | Falha no servidor | Tentar novamente mais tarde. |
+
+Os códigos possíveis de cada endpoint estão documentados na referência da respectiva API.
+
+<Note>
+  Ao repetir requisições após erros `5xx`, aumente o intervalo entre as tentativas
+  (backoff exponencial) e limite o número de tentativas.
+</Note>
