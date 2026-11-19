@@ -1,0 +1,19 @@
+{
+  "name": "fxbridge-docs",
+  "private": true,
+  "description": "Portal de documentação de APIs da FXBridge (Mintlify)",
+  "engines": {
+    "node": ">=20.19.0 <21 || >=22.12.0 <25"
+  },
+  "scripts": {
+    "dev": "mint dev",
+    "validate": "mint validate",
+    "links": "mint broken-links --check-anchors",
+    "a11y": "mint a11y",
+    "check": "npm run validate && npm run links"
+  },
+  "devDependencies": {
+    "@redocly/cli": "2.80.0",
+    "mint": "4.3.67"
+  }
+}

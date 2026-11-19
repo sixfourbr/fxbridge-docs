@@ -1,0 +1,12 @@
+# Donos por área. A última regra que casar vence.
+# PENDENTE: substituir os placeholders pelos times/usuários reais do GitHub
+# antes de ativar a branch protection (etapa E5). Linhas comentadas não têm efeito.
+
+# Padrão do portal (configuração, guias transversais, CI)
+# *                       @fxbridge/docs-maintainers
+
+# APIs — uma linha por API (contrato, bundle e páginas nos dois idiomas)
+# /contracts/pingpong/    @fxbridge/time-pingpong
+# /openapi/pingpong/      @fxbridge/time-pingpong
+# /apis/pingpong/         @fxbridge/time-pingpong
+# /en/apis/pingpong/      @fxbridge/time-pingpong
